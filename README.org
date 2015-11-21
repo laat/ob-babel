@@ -1,0 +1,68 @@
+* ob-babel
+  Document and experiment [[https://babeljs.io][babeljs.io]] with org-mode
+  
+** dependencies
+    #+begin_src sh
+      npm install -g babel-cli 
+    #+end_src
+   
+** babel without any presets is boring
+   
+   : #+begin_src babel
+   : (foo) => foo.toUpperCase()
+   : #+end_src
+
+   : #+RESULTS:
+   : : foo => foo.toUpperCase();
+   : : 
+
+** babel with presets is more fun
+   #+begin_src sh
+     npm install babel-preset-es2015 babel-preset-react
+   #+end_src
+   
+   : #+begin_src babel :presets es2015,react :wrap SRC js
+   :   export default React.createClass({
+   :       getInitialState() {
+   :           return { num: this.getRandomNumber() };
+   :       },
+   : 
+   :       getRandomNumber(): number {
+   :           return Math.ceil(Math.random() * 6);
+   :       },
+   : 
+   :       render(): any {
+   :           return <div>
+   :               Your dice roll:
+   :           {this.state.num}
+   :           </div>;
+   :       }
+   :   })
+   : #+end_src 
+
+   : #+RESULTS:
+   : #+BEGIN_SRC js
+   : "use strict";
+   : 
+   : Object.defineProperty(exports, "__esModule", {
+   :     value: true
+   : });
+   : exports.default = React.createClass({
+   :     displayName: "unknown",
+   :     getInitialState: function getInitialState() {
+   :         return { num: this.getRandomNumber() };
+   :     },
+   :     getRandomNumber: function getRandomNumber() {
+   :         return Math.ceil(Math.random() * 6);
+   :     },
+   :     render: function render() {
+   :         return React.createElement(
+   :             "div",
+   :             null,
+   :             "Your dice roll:",
+   :             this.state.num
+   :         );
+   :     }
+   : });
+   : 
+   : #+END_SRC
